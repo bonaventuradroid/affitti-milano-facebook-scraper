@@ -1,8 +1,7 @@
 #!/usr/bin/env python3
 """
 Automated Facebook rental listing scraper for Milan.
-Scrapes listings from 9 Facebook groups and saves to Google Sheets.
-"""
+Scrapes listings from 9 Facebook groups + Marketplace and saves to Google Sheets."""
 
 import os
 import re
@@ -36,6 +35,7 @@ FACEBOOK_GROUPS = [
     "https://www.facebook.com/groups/milanoaffittiperchihafretta/",
     "https://www.facebook.com/groups/milanoaffittocasa/",
     "https://www.facebook.com/groups/582894099747293/",
+        "https://www.facebook.com/marketplace/milano/search/?query=affitti&category_filter_name=for_rent",
 ]
 
 GOOGLE_SHEET_ID = os.getenv("GOOGLE_SHEET_ID", "122yhOYc6d8p7uIG-umC4tKtgApTbTokyE29CU7KIVJE")
