@@ -4,13 +4,13 @@ on:
   schedule:
     - cron: '0 */2 * * *'  # Run every 2 hours
   workflow_dispatch:  # Allow manual trigger
-permissions:
-    contents: 'read'
-      id-token: 'write'
 
 jobs:
   scrape:
     runs-on: ubuntu-latest
+        permissions:
+              contents: read
+                    id-token: write
     
     steps:
       - uses: actions/checkout@v3
