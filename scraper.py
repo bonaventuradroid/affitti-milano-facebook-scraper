@@ -11,6 +11,7 @@ from datetime import datetime
 from typing import List, Dict, Optional
 from urllib.parse import urljoin
 
+from scraper_subito_bakeca_idealista import SubitoScraper, BakecaScraper, IdealistaScraper
 try:
     from playwright.async_api import async_playwright, TimeoutError as PlaywrightTimeoutError
 except ImportError:
@@ -287,6 +288,21 @@ async def main():
     # Scrape Facebook groups
     scraper = FacebookScraper()
     listings = await scraper.scrape_groups()
+    
+    # Scrape Subito
+        subito_scraper = SubitoScraper()
+                subito_listings = await subito_scraper.scrape()
+    listings.extend(subito_listings)
+        
+    # Scrape Bakeca
+    bakeca_scraper = BakecaScraper()
+    bakeca_listings = await bakeca_scraper.scrape()
+    listings.extend(bakeca_listings)
+
+    # Scrape Idealista
+    idealista_scraper = IdealistaScraper()
+    idealista_listings = await idealista_scraper.scrape()
+    listings.extend(idealista_listings)
     
     print(f"Found {len(listings)} listings")
     
