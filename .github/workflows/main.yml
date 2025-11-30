@@ -1,0 +1,32 @@
+name: Affitti Milano Scraper
+
+on:
+  schedule:
+    - cron: '0 */2 * * *'  # Run every 2 hours
+  workflow_dispatch:  # Allow manual trigger
+
+jobs:
+  scrape:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - uses: actions/checkout@v3
+      
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
+      
+      - name: Install dependencies
+        run: |
+          pip install --upgrade pip
+          pip install -r requirements.txt
+          playwright install
+      
+      - name: Run scraper
+        env:
+          FB_EMAIL: ${{ secrets.FB_EMAIL }}
+          FB_PASSWORD: ${{ secrets.FB_PASSWORD }}
+          GOOGLE_SHEET_ID: ${{ secrets.GOOGLE_SHEET_ID }}
+          GOOGLE_SERVICE_ACCOUNT_JSON: ${{ secrets.GOOGLE_SERVICE_ACCOUNT_JSON }}
+        run: python scraper.py
