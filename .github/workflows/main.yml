@@ -3,35 +3,26 @@ name: Affitti Milano Scraper
 on:
   schedule:
     - cron: '0 */2 * * *'  # Run every 2 hours
-  workflow_dispatch:  # Allow manual trigger
+  workflow_dispatch:
 
 jobs:
   scrape:
     runs-on: ubuntu-latest
-    
+
     steps:
       - uses: actions/checkout@v3
 
-          - name: Authenticate to Google Cloud
-                uses: google-github-actions/auth@v2
-                      id: auth
-                            with:
-                                    workload_identity_provider: 'projects/940643767362/locations/global/workloadIdentityProviders/github'
-                                            service_account_email: 'railway-scraper@affitti-milano-bot.iam.gserviceaccount.com'
-                                                    token_format: 'access_token'
-                                                            access_token_lifetime: '3600s'
-      
       - name: Set up Python
         uses: actions/setup-python@v4
         with:
           python-version: '3.11'
-      
+
       - name: Install dependencies
         run: |
           pip install --upgrade pip
           pip install -r requirements.txt
           playwright install
-      
+
       - name: Run scraper
         env:
           FB_EMAIL: ${{ secrets.FB_EMAIL }}
