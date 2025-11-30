@@ -12,6 +12,7 @@ from typing import List, Dict, Optional
 from urllib.parse import urljoin
 
 from scraper_subito_bakeca_idealista import SubitoScraper, BakecaScraper, IdealistaScraper
+from facebook_nextdoor_scraper import scrape_facebook_groups, scrape_nextdoor
 try:
     from playwright.async_api import async_playwright, TimeoutError as PlaywrightTimeoutError
 except ImportError:
@@ -303,6 +304,14 @@ async def main():
     idealista_scraper = IdealistaScraper()
     idealista_listings = await idealista_scraper.scrape()
     listings.extend(idealista_listings)
+
+    # Scrape Facebook Groups
+    fb_groups_listings = await scrape_facebook_groups(os.getenv("FB_EMAIL", ""), os.getenv("FB_PASSWORD", ""))
+    listings.extend(fb_groups_listings)
+    
+    # Scrape Nextdoor
+    nextdoor_listings = await scrape_nextdoor()
+    listings.extend(nextdoor_listings)
     
     print(f"Found {len(listings)} listings")
     
