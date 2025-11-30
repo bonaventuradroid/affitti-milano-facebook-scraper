@@ -286,19 +286,16 @@ async def main():
     """Main execution function."""
     print(f"Starting Facebook rental scraper at {datetime.now().isoformat()}")
     
-    # Scrape Facebook groups
-    scraper = FacebookScraper()
-    listings = await scraper.scrape_groups()
-    
+   
     # Scrape Subito
-        subito_scraper = SubitoScraper()
-                subito_listings = await subito_scraper.scrape()
-    listings.extend(subito_listings)
-        
-    # Scrape Bakeca
-    bakeca_scraper = BakecaScraper()
-    bakeca_listings = await bakeca_scraper.scrape()
-    listings.extend(bakeca_listings)
+    subito_scraper = SubitoScraper()
+            subito_listings = await subito_scraper.scrape()
+listings.extend(subito_listings)
+    
+# Scrape Bakeca
+bakeca_scraper = BakecaScraper()
+bakeca_listings = await bakeca_scraper.scrape()
+listings.extend(bakeca_listings)
 
     # Scrape Idealista
     idealista_scraper = IdealistaScraper()
